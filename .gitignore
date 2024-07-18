@@ -1,0 +1,7 @@
+virtual/
+.env
+*.pyc
+db.sqlite3
+migrations/
+file.json
+media/
