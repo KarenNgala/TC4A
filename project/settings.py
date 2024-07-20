@@ -40,14 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'application',
     'rest_framework',
     'rest_framework.authtoken',
-    'dj_rest_auth',
-    'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth',
     'dj_rest_auth.registration',
+    'phonenumber_field',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -97,7 +100,7 @@ if config('MODE')=="dev":
         }
     }
 else:
-   DATABASES = {
+    DATABASES = {
        'default': dj_database_url.config(
            default=config('DATABASE_URL')
        )
@@ -147,8 +150,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'application.User'
-
 
 SITE_ID = 1
 
@@ -156,9 +157,21 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+AFRICASTALKING_API_KEY = config('AFRICASTALKING_API_KEY')
+
+if config('MODE')=="dev":
+    AFRICASTALKING_USERNAME = 'sandbox'
+else:
+    AFRICASTALKING_USERNAME = config('AFRICASTALKING_USERNAME')
+
+
+if config('MODE')=="dev":
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
