@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +17,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install django djangorestframework
         pip install -r requirements.txt
+    - name: Load environment variables from .env
+      run: |
+        cp .env .env.local
     - name: Run tests
+      env:
+        MODE: 'dev'
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
         python manage.py migrate
         python manage.py test
