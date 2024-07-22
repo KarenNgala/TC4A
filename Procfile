@@ -1,1 +1,1 @@
-web: gunicorn TC4A.wsgi --log-file -
+web: gunicorn tc4a.wsgi --log-file -

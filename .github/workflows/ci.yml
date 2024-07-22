@@ -22,7 +22,7 @@ jobs:
         cp .env .env.local
     - name: Run tests
       env:
-        MODE: 'dev'
+        MODE: 'prod'
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |

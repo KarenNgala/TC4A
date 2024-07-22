@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 import dj_database_url
+import django_heroku
 from pathlib import Path
 from decouple import config
 
@@ -28,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tc4a.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -167,11 +168,9 @@ AUTHENTICATION_BACKENDS = (
 
 AFRICASTALKING_API_KEY = config('AFRICASTALKING_API_KEY')
 
-if config('MODE')=="dev":
-    AFRICASTALKING_USERNAME = 'sandbox'
-else:
-    AFRICASTALKING_USERNAME = config('AFRICASTALKING_USERNAME')
+AFRICASTALKING_USERNAME = 'sandbox'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-if config('MODE')=="dev":
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+django_heroku.settings(locals())
